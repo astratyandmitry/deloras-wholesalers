@@ -12,4 +12,13 @@ enum OrderQuantityType: string
     {
         return array_column(self::cases(), 'value');
     }
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::PIECE => 'Штука',
+            self::PACK => 'Упаковка',
+            self::SERIES => 'Серия',
+        };
+    }
 }
