@@ -4,6 +4,7 @@ namespace App\Filament\Resources\WholesalerResource\Pages;
 
 use App\Filament\Resources\WholesalerResource;
 use App\Models\Collection;
+use App\Models\Invitation;
 use App\Models\Wholesaler;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -29,14 +30,9 @@ class ViewWholesaler extends ViewRecord
                         ->required(),
                 ])
                 ->action(function (array $data) {
-                    $collection = Collection::query()->find($data['collection_id']);
+                    $invitation = Invitation::make($this->record->id, $data['collection_id']);
 
-                    $phone = preg_replace('/\D+/', '', $this->record->phone);
-                    $url = 'https://test.com/rew';
-                    $text = urlencode("Deloras. Оформите оптовую заявку на коллекцию: {$collection->name}\n\n{$url}");
-                    $url = "https://api.whatsapp.com/send/?phone={$phone}&text={$text}";
-
-                    $this->redirect($url);
+                    $this->redirect($invitation->whatsapp_url);
                 })
                 ->modalHeading('Отправить в WhatsApp')
                 ->modalSubmitActionLabel('Отправить')

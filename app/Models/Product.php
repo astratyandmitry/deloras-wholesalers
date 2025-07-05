@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $image
  *
  * @property \App\Models\Collection $collection
- * @property \App\Models\ProductSize[]|\Illuminate\Database\Eloquent\Collection $productSizes
+ * @property \App\Models\ProductSize[]|\Illuminate\Database\Eloquent\Collection $sizes
  */
 final class Product extends Model
 {

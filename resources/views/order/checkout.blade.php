@@ -1,0 +1,101 @@
+@php /** @var \App\Models\Collection $collection */ @endphp
+@php /** @var \App\Models\Wholesaler $wholesaler */ @endphp
+@php /** @var \App\Models\Product[] $products */ @endphp
+
+@extends('layouts.app', ['title' => "Оформление заказа: {$collection->name}"])
+
+@section('content')
+    <div class="container mx-auto mt-8 pb-24 p-4">
+        <div>
+            <h1 class="text-4xl font-bold uppercase">Оформление заказа</h1>
+            <p class="text-2xl">Коллекция: {{ $collection->name }}</p>
+        </div>
+
+        <form method="POST" class="bg-white mt-8 divide-y divide-gray-200 space">
+            <div class="fixed bottom-0 inset-x-0 bg-white/70 backdrop-blur-xl  text-center p-4">
+                <button type="submit" class="w-60 py-3 text-white cursor-pointer uppercase font-bold text-lg bg-pink-600">Отправить заявку</button>
+            </div>
+
+            @csrf
+            @foreach($products as $product)
+                <div class="p-8 flex space-x-8">
+                    <div class="flex-shrink-0">
+                        <a href="{{ $product->image }}" target="_blank">
+                            <img src="{{ $product->image }}" class="max-h-80">
+                        </a>
+                    </div>
+
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-semibold">{{ $product->sku }} за <span
+                                class="text-red-700">${{ $product->price_usd }}</span></h2>
+                        <p class="text-xl">{{ $product->description }}</p>
+
+                        <div class="bg-gray-200 mt-4 p-4 space-y-2">
+                            @foreach($product->sizes as $size)
+                                <div
+                                    class="flex items-center space-x-4"
+                                    x-data="{
+                                        quantity: 0,
+                                        unitPrice: {{ $product->price_usd }},
+                                        get total() {
+                                            return (this.quantity * this.unitPrice);
+                                        },
+                                        increase() {
+                                            if (this.quantity < 100) this.quantity++;
+                                        },
+                                        decrease() {
+                                            if (this.quantity > 0) this.quantity--;
+                                        }
+                                    }"
+                                >
+                                    <h3 class="text-2xl font-semibold text-right w-[160px]">{{ $size->name }}</h3>
+
+                                    <div class="flex items-center space-x-1">
+                                        <button
+                                            type="button"
+                                            class="bg-amber-600 text-white px-6 py-3 text-lg font-semibold"
+                                            x-on:click="decrease"
+                                        >-
+                                        </button>
+
+                                        <input type="hidden" name="data[{{ $product->id . $loop->index }}][product_id]" value="{{ $product->id }}">
+                                        <input type="hidden" name="data[{{ $product->id . $loop->index }}][size_id]" value="{{ $size->id }}">
+
+                                        <input
+                                            type="number"
+                                            name="data[{{ $product->id . $loop->index }}][quantity]"
+                                            class="bg-white p-3 text-center text-lg font-medium w-[80px]"
+                                            x-model.number="quantity"
+                                            min="0"
+                                            max="100"
+                                            step="1"
+                                        >
+
+                                        <select
+                                            name="data[{{ $product->id . $loop->index }}][quantity_type]"
+                                            class="bg-white p-3 text-center text-lg font-medium border-l border-gray-300 appearance-none"
+                                        >
+                                            <option value="series">серия</option>
+                                            <option value="piece">штука</option>
+                                        </select>
+
+                                        <button
+                                            type="button"
+                                            class="bg-green-600 text-white px-6 py-3 text-lg font-semibold"
+                                            x-on:click="increase"
+                                        >+
+                                        </button>
+                                    </div>
+
+                                    <h3 class="text-2xl font-medium" x-text="`$${total}`"></h3>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+@endsection
