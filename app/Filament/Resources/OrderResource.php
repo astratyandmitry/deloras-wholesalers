@@ -65,6 +65,11 @@ class OrderResource extends Resource
                     ->label('Оптовик')
                     ->searchable(),
 
+                Tables\Columns\IconColumn::make('fulfilled')
+                    ->label('Собран?')
+                    ->boolean()
+                    ->width('100px'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Создано')
                     ->width('100px')

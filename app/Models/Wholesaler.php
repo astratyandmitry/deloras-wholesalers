@@ -19,7 +19,7 @@ final class Wholesaler extends Model
 
     public function orders(): HasMany
     {
-        $this->hasMany(Order::class);
+        return $this->hasMany(Order::class);
     }
 
     public function getLabelAttribute(): string

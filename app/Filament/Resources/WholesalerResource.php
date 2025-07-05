@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WholesalerResource\Pages;
-use App\Filament\Resources\WholesalerResource\RelationManagers;
+use App\Filament\Resources\WholesalerResource\RelationManagers\OrdersRelationManager;
 use App\Models\Wholesaler;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 
 class WholesalerResource extends Resource
 {
@@ -47,6 +49,24 @@ class WholesalerResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->columns(3)
+            ->schema([
+                Infolists\Components\TextEntry::make('name')
+                    ->label('Имя'),
+
+                Infolists\Components\TextEntry::make('city')
+                    ->label('Город'),
+
+                Infolists\Components\TextEntry::make('phone')
+                    ->label('Телефон')
+                    ->dateTime(),
+            ]);
+    }
+
+
     public static function table(Table $table): Table
     {
         return $table
@@ -70,7 +90,6 @@ class WholesalerResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -82,7 +101,7 @@ class WholesalerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OrdersRelationManager::class,
         ];
     }
 

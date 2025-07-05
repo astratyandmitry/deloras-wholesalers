@@ -41,17 +41,12 @@ class ItemsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('code')
             ->columns([
-                Tables\Columns\TextColumn::make('index')
-                    ->label('Позиция')
-                    ->width('100px')
-                    ->state(static function (Tables\Contracts\HasTable $livewire, \stdClass $rowLoop): string {
-                        return (string) (
-                            $rowLoop->iteration +
-                            ($livewire->getTableRecordsPerPage() * (
-                                    $livewire->getTablePage() - 1
-                                ))
-                        );
-                    }),
+                Tables\Columns\ImageColumn::make('product.image')
+                    ->label('Фото')
+                    ->height('100px')
+                    ->url(fn(OrderItem $model) => url()->to($model->product->image), true)
+                    ->disk('public')
+                    ->extraImgAttributes(['loading' => 'lazy']),
 
                 Tables\Columns\TextColumn::make('product.sku')
                     ->label('Товар')

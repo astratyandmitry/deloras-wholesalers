@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\CollectionResource\RelationManagers;
 
+use App\Models\Model;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Filament\Forms;
@@ -33,13 +34,13 @@ class ProductsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('sku')
                     ->label('Код товара')
                     ->required()
-                    ->unique(ignoreRecord:  true)
+                    ->unique(ignoreRecord: true)
                     ->maxLength(40),
 
                 Forms\Components\TextInput::make('description')
                     ->label('Название/описание товара')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(1000),
 
                 Forms\Components\TextInput::make('price_usd')
                     ->label('Стоимость товара')
@@ -52,6 +53,17 @@ class ProductsRelationManager extends RelationManager
                     ->label('Фотография товара')
                     ->required()
                     ->image(),
+
+                Forms\Components\Repeater::make('sizes')
+                    ->label('Размеры')
+                    ->relationship('sizes')
+                    ->deletable(fn(Forms\Components\Repeater $component) => $component->getRecord() === null)
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Название размера')
+                            ->required()
+                            ->maxLength(100),
+                    ]),
             ]);
     }
 
@@ -61,13 +73,14 @@ class ProductsRelationManager extends RelationManager
             ->recordTitleAttribute('sku')
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
+                    ->url(fn(Product $model) => url()->to($model->image), true)
                     ->label('Фото')
                     ->height('100px')
                     ->disk('public')
                     ->extraImgAttributes(['loading' => 'lazy']),
 
                 Tables\Columns\TextColumn::make('sku')
-                    ->description(fn (Product $item) => $item->description)
+                    ->description(fn(Product $item) => $item->description)
                     ->label('Код')
                     ->searchable(),
 

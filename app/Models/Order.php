@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
  * @property string $code
  * @property int $collection_id
  * @property int $wholesaler_id
+ * @property bool $fulfilled
  *
  * @property \App\Models\Collection $collection
  * @property \App\Models\Wholesaler $wholesaler
@@ -17,6 +18,13 @@ use Illuminate\Support\Str;
  */
 final class Order extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'fulfilled' => 'boolean',
+        ];
+    }
+
     public static function boot(): void
     {
         parent::boot();

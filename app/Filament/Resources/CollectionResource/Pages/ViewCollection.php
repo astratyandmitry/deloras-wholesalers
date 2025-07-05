@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CollectionResource\Pages;
 use App\Filament\Resources\CollectionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class ViewCollection extends ViewRecord
 {
@@ -15,5 +16,10 @@ class ViewCollection extends ViewRecord
         return [
             Actions\EditAction::make(),
         ];
+    }
+
+    public function getTitle(): string|Htmlable
+    {
+        return "Детали коллекции";
     }
 }
