@@ -86,6 +86,7 @@ class WholesalerResource extends Resource
 
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Телефон')
+                    ->visibleFrom('md')
                     ->searchable(),
             ])
             ->actions([

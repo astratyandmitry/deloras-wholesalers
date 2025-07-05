@@ -43,6 +43,7 @@ class ItemsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\ImageColumn::make('product.image')
                     ->label('Фото')
+                    ->visibleFrom('md')
                     ->height('100px')
                     ->url(fn(OrderItem $model) => url()->to($model->product->image), true)
                     ->disk('public')
@@ -54,15 +55,15 @@ class ItemsRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('size.name')
                     ->label('Размер')
-                    ->width('200px'),
+                    ->width('150px'),
 
                 Tables\Columns\TextColumn::make('quantity')
                     ->formatStateUsing(fn(OrderItem $item
                     ): string => "{$item->quantity} {$item->quantity_type->getShortLabel()}")
                     ->badge()
                     ->color('gray')
-                    ->label('Количество')
-                    ->width('150px'),
+                    ->label('Кол-во')
+                    ->width('100px'),
 
                 Tables\Columns\ToggleColumn::make('fulfilled')
                     ->label('Собран')

@@ -16,4 +16,9 @@ class EditWholesaler extends EditRecord
             Actions\ViewAction::make(),
         ];
     }
+
+    public function getRelationManagers(): array
+    {
+        return [];
+    }
 }

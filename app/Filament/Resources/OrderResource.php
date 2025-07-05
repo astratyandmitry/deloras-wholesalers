@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -57,23 +58,19 @@ class OrderResource extends Resource
                     ->width('80px')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('collection.name')
-                    ->label('Коллекция')
-                    ->searchable(),
-
                 Tables\Columns\TextColumn::make('wholesaler.label')
                     ->label('Оптовик')
                     ->searchable(),
 
-                Tables\Columns\IconColumn::make('fulfilled')
-                    ->label('Собран?')
-                    ->boolean()
-                    ->width('100px'),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Создано')
-                    ->width('100px')
+                    ->width('200px')
                     ->date(),
+
+                Tables\Columns\IconColumn::make('fulfilled')
+                    ->label('Собран')
+                    ->boolean()
+                    ->width('80px'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('collection_id')
