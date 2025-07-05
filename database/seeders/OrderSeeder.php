@@ -21,14 +21,14 @@ final class OrderSeeder extends Seeder
 
         Wholesaler::query()->get()
             ->each(function (Wholesaler $wholesaler) use ($collection) {
-                Product::query()->inRandomOrder()->limit(rand(1, 3))->get()
-                    ->each(function (Product $product) use ($collection, $wholesaler) {
-                        /** @var \App\Models\Order $order */
-                        $order = Order::query()->create([
-                            'wholesaler_id' => $wholesaler->id,
-                            'collection_id' => $collection->id,
-                        ]);
+                /** @var \App\Models\Order $order */
+                $order = Order::query()->create([
+                    'wholesaler_id' => $wholesaler->id,
+                    'collection_id' => $collection->id,
+                ]);
 
+                Product::query()->inRandomOrder()->limit(rand(2, 3))->get()
+                    ->each(function (Product $product) use ($order, $collection, $wholesaler) {
                         $product->sizes()->limit(rand(1, 3))->get()
                             ->each(function (ProductSize $size) use ($product, $order) {
                                 $order->items()->create([

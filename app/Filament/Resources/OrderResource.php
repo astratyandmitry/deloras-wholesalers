@@ -73,6 +73,9 @@ class OrderResource extends Resource
                     ->width('80px'),
             ])
             ->filters([
+                Tables\Filters\TernaryFilter::make('fulfilled')
+                    ->label('Собран'),
+
                 Tables\Filters\SelectFilter::make('collection_id')
                     ->label('Коллекция')
                     ->relationship('collection', 'name'),

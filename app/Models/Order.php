@@ -45,6 +45,11 @@ final class Order extends Model
         return $code;
     }
 
+    public function getRouteKeyName(): string
+    {
+        return 'code';
+    }
+
     public function collection(): BelongsTo
     {
         return $this->belongsTo(Collection::class);

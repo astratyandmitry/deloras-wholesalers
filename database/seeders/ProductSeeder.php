@@ -59,7 +59,7 @@ final class ProductSeeder extends Seeder
                 'image' => "/tmp_images/{$image}",
             ]);
 
-            $sizes = $this->getRandomSizes(rand(1, 3));
+            $sizes = $this->getRandomSizes(rand(2, 5));
 
             $product->sizes()->createMany(
                 collect($sizes)->map(fn (string $size) => ['name' => $size])

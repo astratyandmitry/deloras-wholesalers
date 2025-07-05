@@ -5,6 +5,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Exports\OrderExporter;
 use App\Filament\Resources\OrderResource;
 use App\Models\Model;
+use App\Models\Order;
 use Filament\Actions;
 use Filament\Actions\Exports\Enums\ExportFormat;
 use Filament\Resources\Pages\ViewRecord;
@@ -24,16 +25,22 @@ class ViewOrder extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ExportAction::make('export')
+            //Actions\ExportAction::make('export')
+            //    ->icon('heroicon-s-table-cells')
+            //    ->exporter(OrderExporter::class)
+            //    ->columnMapping(false)
+            //    ->formats([ExportFormat::Xlsx])
+            //    ->modifyQueryUsing(fn(Builder $query) => $query->where('order_id', $this->record->getKey()))
+            //    ->label('Экпортировать'),
+
+            Actions\Action::make('preview')
+                ->label('Накладная')
+                ->color('gray')
                 ->icon('heroicon-s-table-cells')
-                ->exporter(OrderExporter::class)
-                ->columnMapping(false)
-                ->formats([ExportFormat::Xlsx])
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('order_id', $this->record->getKey()))
-                ->label('Экпортировать'),
+                ->url(fn(Order $order) => route('order.preview', $order), true),
 
             Actions\Action::make('fulfill-true')
-                ->label('Пометить собранный')
+                ->label('Завершить')
                 ->icon('heroicon-s-check')
                 ->requiresConfirmation()
                 ->color('success')
@@ -42,7 +49,7 @@ class ViewOrder extends ViewRecord
                 ->action(fn(Model $record) => $record->update(['fulfilled' => true])),
 
             Actions\Action::make('fulfill-false')
-                ->label('Вернуть к сбору')
+                ->label('Доработать')
                 ->icon('heroicon-s-no-symbol')
                 ->requiresConfirmation()
                 ->color('danger')
