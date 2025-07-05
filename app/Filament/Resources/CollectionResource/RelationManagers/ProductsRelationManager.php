@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\CollectionResource\RelationManagers;
 
+use App\Models\OrderItem;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -65,12 +67,8 @@ class ProductsRelationManager extends RelationManager
                     ->extraImgAttributes(['loading' => 'lazy']),
 
                 Tables\Columns\TextColumn::make('sku')
+                    ->description(fn (Product $item) => $item->description)
                     ->label('Код')
-                    ->searchable()
-                    ->width('200px'),
-
-                Tables\Columns\TextColumn::make('description')
-                    ->label('Описание')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('price_usd')

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $product_id
  * @property int $size_id
  * @property int $quantity
+ * @property bool $fulfilled
  *
  * @property \App\Models\Enums\OrderQuantityType $quantity_type
  * @property \App\Models\Order $order
@@ -23,6 +24,7 @@ final class OrderItem extends Model
         return [
             'quantity' => 'integer',
             'quantity_type' => OrderQuantityType::class,
+            'fulfilled' => 'boolean',
         ];
     }
 

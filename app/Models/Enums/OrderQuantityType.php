@@ -2,7 +2,9 @@
 
 namespace App\Models\Enums;
 
-enum OrderQuantityType: string
+use Filament\Support\Contracts\HasLabel;
+
+enum OrderQuantityType: string implements HasLabel
 {
     case PIECE = 'piece';
     case PACK = 'pack';
@@ -13,12 +15,21 @@ enum OrderQuantityType: string
         return array_column(self::cases(), 'value');
     }
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match ($this) {
             self::PIECE => 'Штука',
             self::PACK => 'Упаковка',
             self::SERIES => 'Серия',
+        };
+    }
+
+    public function getShortLabel(): string
+    {
+        return match ($this) {
+            self::PIECE => 'шт.',
+            self::PACK => 'уп.',
+            self::SERIES => 'сер.',
         };
     }
 }

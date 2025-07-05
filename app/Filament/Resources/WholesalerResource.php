@@ -17,7 +17,7 @@ class WholesalerResource extends Resource
 {
     protected static ?string $model = Wholesaler::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    protected static ?string $navigationIcon = 'heroicon-s-user-group';
 
     protected static ?string $label = 'Оптовик';
 
@@ -67,9 +67,6 @@ class WholesalerResource extends Resource
                 Tables\Columns\TextColumn::make('phone')
                     ->label('Телефон')
                     ->searchable(),
-            ])
-            ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
