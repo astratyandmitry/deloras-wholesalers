@@ -16,12 +16,12 @@ final class UserSeeder extends Seeder
 
     public function run(): void
     {
-        collect($this->data)->each(function (array $userData) {
+        collect($this->data)->each(function (array $data) {
             User::query()->firstOrCreate([
-                'email' => $userData['email'],
+                'email' => $data['email'],
             ], [
-                'name' => $userData['name'],
-                'password' => $userData['password'] ??= Hash::make('password'),
+                'name' => $data['name'],
+                'password' => $data['password'] ??= Hash::make('password'),
             ]);
         });
     }
