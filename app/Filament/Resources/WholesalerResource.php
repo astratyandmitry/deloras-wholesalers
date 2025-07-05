@@ -43,7 +43,7 @@ class WholesalerResource extends Resource
                 Forms\Components\TextInput::make('phone')
                     ->label('Телефон оптовика')
                     ->helperText('Будет использоваться для отправки сообщений в WhatsApp')
-                    ->mask('+7999999999')
+                    ->mask('+79999999999')
                     ->unique(ignoreRecord: true)
                     ->required(),
             ]);
