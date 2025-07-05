@@ -5,8 +5,8 @@
 @section('content')
     <div class="container mx-auto my-8 p-4">
         <div>
-            <h1 class="text-4xl font-bold uppercase">Заказ {{ $order->code }}</h1>
-            <p class="text-2xl">Заказчик: {{ $order->wholesaler->name }} ({{ $order->wholesaler->city }})</p>
+            <h1 class="text-3xl md:text-4xl font-bold uppercase">Заказ {{ $order->code }}</h1>
+            <p class="text-xl md:text-2xl">Заказчик: {{ $order->wholesaler->name }} ({{ $order->wholesaler->city }})</p>
         </div>
 
         <table class="w-full mt-8 bg-white">

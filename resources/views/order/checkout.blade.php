@@ -7,8 +7,8 @@
 @section('content')
     <div class="container mx-auto mt-8 pb-24 p-4">
         <div>
-            <h1 class="text-4xl font-bold uppercase">Оформление заказа</h1>
-            <p class="text-2xl">Коллекция: {{ $collection->name }}</p>
+            <h1 class="text-3xl md:text-4xl font-bold uppercase">Оформление заказа</h1>
+            <p class="text-xl text-2xl">Коллекция: {{ $collection->name }}</p>
         </div>
 
         <form method="POST" class="bg-white mt-8 divide-y divide-gray-200 space">
@@ -18,10 +18,10 @@
 
             @csrf
             @foreach($products as $product)
-                <div class="p-8 flex space-x-8">
-                    <div class="flex-shrink-0">
+                <div class="p-4 md:flex space-x-4">
+                    <div class="flex-shrink-0 mb-4 md:mb-0">
                         <a href="{{ $product->image }}" target="_blank">
-                            <img src="{{ $product->image }}" class="max-h-80">
+                            <img src="{{ $product->image }}" class="md:max-h-96">
                         </a>
                     </div>
 
@@ -30,10 +30,10 @@
                                 class="text-red-700">${{ $product->price_usd }}</span></h2>
                         <p class="text-xl">{{ $product->description }}</p>
 
-                        <div class="bg-gray-200 mt-4 p-4 space-y-2">
+                        <div class="bg-gray-200 mt-4 p-4 space-y-4">
                             @foreach($product->sizes as $size)
                                 <div
-                                    class="flex items-center space-x-4"
+                                    class="md:flex items-center space-x-4"
                                     x-data="{
                                         quantity: 0,
                                         unitPrice: {{ $product->price_usd }},
@@ -48,9 +48,14 @@
                                         }
                                     }"
                                 >
-                                    <h3 class="text-2xl font-semibold text-right w-[160px]">{{ $size->name }}</h3>
+                                    <div class="flex items-center justify-between md:hidden">
+                                        <h3 class="text-2xl font-semibold text-right">{{ $size->name }}</h3>
+                                        <h3 class="text-2xl font-medium" x-text="`$${total}`"></h3>
+                                    </div>
 
-                                    <div class="flex items-center space-x-1">
+                                    <h3 class="text-2xl font-semibold text-right w-[160px] hidden md:block">{{ $size->name }}</h3>
+
+                                    <div class="flex items-center space-x-1 justify-center">
                                         <button
                                             type="button"
                                             class="bg-amber-600 text-white px-6 py-3 text-lg font-semibold"
@@ -64,7 +69,7 @@
                                         <input
                                             type="number"
                                             name="data[{{ $product->id . $loop->index }}][quantity]"
-                                            class="bg-white p-3 text-center text-lg font-medium w-[80px]"
+                                            class="bg-white p-3 text-center text-lg font-medium w-full"
                                             x-model.number="quantity"
                                             min="0"
                                             max="100"
@@ -87,7 +92,7 @@
                                         </button>
                                     </div>
 
-                                    <h3 class="text-2xl font-medium" x-text="`$${total}`"></h3>
+                                    <h3 class="text-2xl hidden md:block font-medium" x-text="`$${total}`"></h3>
                                 </div>
                             @endforeach
                         </div>
