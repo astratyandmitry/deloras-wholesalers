@@ -16,8 +16,6 @@ return new class extends Migration{
             $table->string('city', 100)->index();
             $table->string('phone', 14)->index()->unique();
             $table->timestamps();
-
-            $table->unique(['name', 'city']);
         });
     }
 

@@ -42,7 +42,9 @@ final class ProductSeeder extends Seeder
     public function run(): void
     {
         /** @var \App\Models\Collection $collection */
-        $collection = Collection::factory()->create();
+        $collection = Collection::factory()->create([
+            'name' => 'Школьная коллекция 2025',
+        ]);
 
         collect($this->products)->each(function (array $data, int $index) use ($collection) {
             $image = 'product-'.($index + 1).'.webp';
