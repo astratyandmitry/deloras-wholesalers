@@ -10,12 +10,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
-class WholesalerResource extends Resource
+final class WholesalerResource extends Resource
 {
     protected static ?string $model = Wholesaler::class;
 

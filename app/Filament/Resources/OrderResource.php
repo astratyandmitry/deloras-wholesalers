@@ -4,20 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Models\Enums\OrderStatus;
 use App\Models\Order;
-use App\Models\OrderItem;
-use Filament\Forms;
-use Filament\Forms\Form;
+use App\Models\Wholesaler;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 
-class OrderResource extends Resource
+final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
@@ -30,13 +26,17 @@ class OrderResource extends Resource
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
-            ->columns(3)
+            ->columns(2)
             ->schema([
                 Infolists\Components\TextEntry::make('collection.name')
                     ->label('Коллекция'),
 
                 Infolists\Components\TextEntry::make('wholesaler.label')
                     ->label('Оптовик'),
+
+                Infolists\Components\TextEntry::make('status')
+                    ->badge()
+                    ->label('Статус'),
 
                 Infolists\Components\TextEntry::make('created_at')
                     ->label('Дата заказа')
@@ -59,22 +59,22 @@ class OrderResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('wholesaler.label')
-                    ->label('Оптовик')
-                    ->searchable(),
+                    ->label('Оптовик'),
+
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->label('Статус')
+                    ->width('150px'),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Создано')
                     ->width('200px')
                     ->date(),
-
-                Tables\Columns\IconColumn::make('fulfilled')
-                    ->label('Собран')
-                    ->boolean()
-                    ->width('80px'),
             ])
             ->filters([
-                Tables\Filters\TernaryFilter::make('fulfilled')
-                    ->label('Собран'),
+                Tables\Filters\SelectFilter::make('status')
+                    ->options(OrderStatus::class)
+                    ->label('Статус'),
 
                 Tables\Filters\SelectFilter::make('collection_id')
                     ->label('Коллекция')
@@ -82,7 +82,7 @@ class OrderResource extends Resource
 
                 Tables\Filters\SelectFilter::make('wholesaler_id')
                     ->label('Оптовик')
-                    ->getOptionLabelFromRecordUsing(fn(Model $model) => $model->label)
+                    ->getOptionLabelFromRecordUsing(fn(Wholesaler $record) => $record->label)
                     ->relationship('wholesaler', 'name')
                     ->searchable(['name', 'city', 'phone'])
                     ->preload(),

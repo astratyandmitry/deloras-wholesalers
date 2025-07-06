@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
@@ -10,8 +11,8 @@ use Illuminate\Support\Str;
  * @property string $code
  * @property int $collection_id
  * @property int $wholesaler_id
- * @property bool $fulfilled
  *
+ * @property \App\Models\Enums\OrderStatus $status
  * @property \App\Models\Collection $collection
  * @property \App\Models\Wholesaler $wholesaler
  * @property \App\Models\OrderItem[]|\Illuminate\Database\Eloquent\Collection $items
@@ -21,7 +22,7 @@ final class Order extends Model
     protected function casts(): array
     {
         return [
-            'fulfilled' => 'boolean',
+            'status' => OrderStatus::class,
         ];
     }
 
@@ -29,8 +30,12 @@ final class Order extends Model
     {
         parent::boot();
 
-        self::creating(function (Order $model) {
+        static::creating(function (Order $model) {
             $model->code = self::generateUniqueCode();
+        });
+
+        static::deleting(function (Order $model) {
+            $model->items()->delete();
         });
     }
 

@@ -13,15 +13,18 @@
 
         <form method="POST" class="bg-white mt-8 divide-y divide-gray-200 space">
             <div class="fixed bottom-0 inset-x-0 bg-white/70 backdrop-blur-xl  text-center p-4">
-                <button type="submit" class="w-60 py-3 text-white cursor-pointer uppercase font-bold text-lg bg-pink-600">Отправить заявку</button>
+                <button type="submit"
+                        class="w-60 py-3 text-white cursor-pointer uppercase font-bold text-lg bg-pink-600">
+                    Отправить заявку
+                </button>
             </div>
 
             @csrf
             @foreach($products as $product)
                 <div class="p-4 md:flex space-x-4">
                     <div class="flex-shrink-0 mb-4 md:mb-0">
-                        <a href="{{ "/storage/{$product->image}" }}" target="_blank">
-                            <img src="{{ "/storage/{$product->image}" }}" class="md:max-h-96">
+                        <a href="{{ url()->to($product->image) }}" target="_blank">
+                            <img src="{{ url()->to($product->image) }}" class="md:max-h-96">
                         </a>
                     </div>
 
@@ -35,7 +38,7 @@
                                 <div
                                     class="md:flex items-center space-x-4"
                                     x-data="{
-                                        quantity: 0,
+                                        quantity: {{ (int)\Illuminate\Support\Arr::get($items, "{$product->id}-{$size->id}.quantity") }},
                                         unitPrice: {{ $product->price_usd }},
                                         get total() {
                                             return (this.quantity * this.unitPrice);
@@ -63,8 +66,10 @@
                                         >-
                                         </button>
 
-                                        <input type="hidden" name="data[{{ $product->id . $loop->index }}][product_id]" value="{{ $product->id }}">
-                                        <input type="hidden" name="data[{{ $product->id . $loop->index }}][size_id]" value="{{ $size->id }}">
+                                        <input type="hidden" name="data[{{ $product->id . $loop->index }}][product_id]"
+                                               value="{{ $product->id }}">
+                                        <input type="hidden" name="data[{{ $product->id . $loop->index }}][size_id]"
+                                               value="{{ $size->id }}">
 
                                         <input
                                             type="number"
@@ -80,8 +85,14 @@
                                             name="data[{{ $product->id . $loop->index }}][quantity_type]"
                                             class="bg-white p-3 text-center text-lg font-medium border-l border-gray-300 appearance-none"
                                         >
-                                            <option value="series">серия</option>
-                                            <option value="piece">штука</option>
+                                            <option value="series"
+                                                    @if (\Illuminate\Support\Arr::get($items, "{$product->id}-{$size->id}.quantity_type") === 'series') selected @endif>
+                                                серия
+                                            </option>
+                                            <option value="piece"
+                                                    @if (\Illuminate\Support\Arr::get($items, "{$product->id}-{$size->id}.quantity_type") === 'piece') selected @endif>
+                                                штука
+                                            </option>
                                         </select>
 
                                         <button

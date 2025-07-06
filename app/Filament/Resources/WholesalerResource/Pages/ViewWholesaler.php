@@ -5,13 +5,12 @@ namespace App\Filament\Resources\WholesalerResource\Pages;
 use App\Filament\Resources\WholesalerResource;
 use App\Models\Collection;
 use App\Models\Invitation;
-use App\Models\Wholesaler;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Forms;
 use Illuminate\Contracts\Support\Htmlable;
 
-class ViewWholesaler extends ViewRecord
+final class ViewWholesaler extends ViewRecord
 {
     protected static string $resource = WholesalerResource::class;
 

@@ -7,7 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Contracts\Support\Htmlable;
 
-class ViewCollection extends ViewRecord
+final class ViewCollection extends ViewRecord
 {
     protected static string $resource = CollectionResource::class;
 

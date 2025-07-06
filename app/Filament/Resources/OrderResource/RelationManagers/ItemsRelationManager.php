@@ -2,18 +2,15 @@
 
 namespace App\Filament\Resources\OrderResource\RelationManagers;
 
-use App\Models\Model;
 use App\Models\OrderItem;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ItemsRelationManager extends RelationManager
+final class ItemsRelationManager extends RelationManager
 {
     protected static string $relationship = 'items';
 

@@ -4,9 +4,20 @@
 
 @section('content')
     <div class="container mx-auto my-8 p-4">
-        <div>
-            <h1 class="text-3xl md:text-4xl font-bold uppercase">Заказ {{ $order->code }}</h1>
-            <p class="text-xl md:text-2xl">Заказчик: {{ $order->wholesaler->name }} ({{ $order->wholesaler->city }})</p>
+        <div class="flex flex-col md:flex-row gap-8 md:items-center justify-between">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold uppercase">Заказ {{ $order->code }}</h1>
+                <p class="text-xl md:text-2xl">Заказчик: {{ $order->wholesaler->label }}</p>
+            </div>
+
+            @if ($editable)
+                <div>
+                    <a href="{{ route('order.checkout', [$order->collection, 't' => request()->query('t'), 'edit' => true]) }}"
+                       class="bg-orange-100 px-6 py-3 text-orange-700 hover:bg-orange-200 uppercase font-medium text-sm">
+                        Изменить заявку
+                    </a>
+                </div>
+            @endif
         </div>
 
         <table class="w-full mt-8 bg-white">

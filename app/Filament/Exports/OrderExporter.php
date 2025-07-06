@@ -7,7 +7,7 @@ use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
 
-class OrderExporter extends Exporter
+final class OrderExporter extends Exporter
 {
     protected static ?string $model = OrderItem::class;
 

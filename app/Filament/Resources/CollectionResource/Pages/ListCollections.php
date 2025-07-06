@@ -6,7 +6,7 @@ use App\Filament\Resources\CollectionResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListCollections extends ListRecords
+final class ListCollections extends ListRecords
 {
     protected static string $resource = CollectionResource::class;
 

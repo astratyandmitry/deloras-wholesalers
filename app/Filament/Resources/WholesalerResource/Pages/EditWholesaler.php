@@ -6,7 +6,7 @@ use App\Filament\Resources\WholesalerResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditWholesaler extends EditRecord
+final class EditWholesaler extends EditRecord
 {
     protected static string $resource = WholesalerResource::class;
 
