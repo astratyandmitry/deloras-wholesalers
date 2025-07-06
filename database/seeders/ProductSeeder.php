@@ -56,7 +56,7 @@ final class ProductSeeder extends Seeder
                 'collection_id' => $collection->id,
                 'description' => $data['description'],
                 'price_usd' => rand(10, 30),
-                'image' => "/tmp_images/{$image}",
+                'image' => "tmp_images/{$image}",
             ]);
 
             $sizes = $this->getRandomSizes(rand(2, 5));

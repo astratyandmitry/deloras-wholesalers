@@ -20,8 +20,8 @@
             @foreach($products as $product)
                 <div class="p-4 md:flex space-x-4">
                     <div class="flex-shrink-0 mb-4 md:mb-0">
-                        <a href="{{ $product->image }}" target="_blank">
-                            <img src="{{ $product->image }}" class="md:max-h-96">
+                        <a href="{{ "/storage/{$product->image}" }}" target="_blank">
+                            <img src="{{ "/storage/{$product->image}" }}" class="md:max-h-96">
                         </a>
                     </div>
 
